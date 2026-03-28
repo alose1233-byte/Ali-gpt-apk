@@ -7,10 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip build-essential git python3-setuptools xclip libffi-dev libssl-dev
+          pip3 install --user --upgrade buildozer
+
       - name: Build with Buildozer
-        uses: herreraj/buildozer-action@master
-        with:
-          command: buildozer android debug
+        run: |
+          export PATH=$PATH:$HOME/.local/bin
+          buildozer android debug
+        continue-on-error: false
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
