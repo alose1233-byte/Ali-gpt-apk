@@ -13,15 +13,14 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Buildozer Dependencies
+      - name: Install Buildozer
         run: |
           sudo apt update
-          sudo apt install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
-          sudo apt install -y libgstreamer1.0-gstreamer-lite-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+          sudo apt install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
           pip install --user buildozer
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Build APK with Buildozer
+      - name: Build with Buildozer
         run: |
           buildozer android debug
         continue-on-error: false
