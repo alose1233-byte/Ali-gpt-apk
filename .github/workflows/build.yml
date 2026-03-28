@@ -8,15 +8,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Buildozer Dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip build-essential git python3-setuptools xclip libffi-dev libssl-dev
-          pip3 install --user --upgrade buildozer
+          sudo apt install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
+          sudo apt install -y libgstreamer1.0-gstreamer-lite-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+          pip install --user buildozer
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Build with Buildozer
+      - name: Build APK with Buildozer
         run: |
-          export PATH=$PATH:$HOME/.local/bin
           buildozer android debug
         continue-on-error: false
 
